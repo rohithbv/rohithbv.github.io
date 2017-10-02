@@ -5,17 +5,14 @@ class DictSearch(object):
       :type wordDict: List[str]
       :rtype: bool
       """
-      endIdx = len(s)
-      length = 0
-      for i in range(endIdx-1, -1, -1):
-         if s[i:endIdx] in wordDict:
-            length += endIdx - i
-            print str(s[i:endIdx])
-            wordDict.remove(s[i:endIdx])
-            endIdx = i
-      print length
-      if len(s) == length: return True
-      else: return False
+      flagList = [False for _ in range(len(s)+1)]
+      flagList[0] = True
+      for i in range(1, len(s)+1):
+         for j in range(0, i):
+            if flagList[j] and s[j:i] in wordDict:
+               flagList[i] = True
+               break
+      return flagList[len(s)]
 
 if __name__ == '__main__':
    myObj = DictSearch()
